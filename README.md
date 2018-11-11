@@ -10,6 +10,7 @@ _Super simple svg loading module for Vue.js_
 - `file.svg` - normal import using `file-loader`
 - `file.svg?data` - base64 data url import using `url-loader`
 - `file.svg?inline` - inline import using `vue-svg-loader`
+- `file.svg?sprite` - import using `svg-sprite-loader`
 
 ## Installation
 Using the new [Vue CLI 3](https://cli.vuejs.org/), it's as simple as navigating to your project and running:
@@ -84,6 +85,50 @@ export default {
 ```html
 <svg xmlns="http://www.w3.org/2000/svg"><path></path></svg>
 ```
+
+### Sprite import
+
+```html
+<template>
+	<svg>
+		<use xlink:href="#vue-logo"></use>
+	</svg>
+</template>
+
+<script>
+import "@/assets/vue-logo.svg?sprite";
+</script>
+```
+
+```html
+<!-- Coming shortly -->
+```
+
+## Configuration
+You can provide options to all of the loaders used in using the `vue.config.js` `pluginOptions` field:
+
+```javascript
+// vue.config.js
+
+module.exports = {
+	pluginOptions: {
+		svg: {
+			inline: {}, // Pass options to vue-svg-loader
+			data: {}, // Pass options to url-loader
+			sprite: {}, // Pass options to svg-sprite-loader
+			external: {} // Pass options to file-loader
+		}
+	}
+};
+
+```
+
+You can provide as many options as you like, or nothing at all. You don't have to configure options, it will use some standard defaults.
+
+### Standard defaults
+By default, `file-loader` will inherit the standard configuration from `vue-cli` so that behaves exactly the same.
+
+`vue-svg-loader` by default will _not_ use `svgo`. This is because it can cause more problems than it solves generally, though this can be easily re-enabled. Check the [`vue-svg-loader` documentation](https://vue-svg-loader.js.org/) for more info.
 
 ## Contributing
 As this loader attempts to abstract webpack configuration from the process and make it easier to use multiple svg loaders, any contributions that add more svg loader methods to the configuration will be accepted wholeheartedly!
