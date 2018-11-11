@@ -4,7 +4,7 @@
  * @param  {Object}    options All options specified in vue.config.js
  */
 function handler(api, options) {
-	api.chainWebpack(setup);
+	api.chainWebpack(config => setup(config, options));
 }
 
 /**
@@ -12,16 +12,16 @@ function handler(api, options) {
  * chainWebpack API modify the required rules.
  * @param  {ChainWebpack} config An instance of ChainWebpack
  */
-function setup(config) {
+function setup(config, options) {
 	const rule = config.module.rule("svg"); // Find the svg rule
-	const options = rule.use("file-loader").get("options"); // Make sure we save the file loader options
+	const fileLoaderOptions = rule.use("file-loader").get("options"); // Make sure we save the file loader options
 	rule.uses.clear(); // Clear out existing uses of the svg rule
 
 	rule
 		.oneOf("inline").resourceQuery(/inline/).use("vue-svg-loader").loader("vue-svg-loader").options({ svgo: false }).end().end()
 		.oneOf("sprite").resourceQuery(/sprite/).use("svg-sprite-loader").loader("svg-sprite-loader").end().end()
 		.oneOf("data").resourceQuery(/data/).use("url-loader").loader("url-loader").end().end()
-		.oneOf("external").use("file-loader").loader("file-loader").options(options).end().end();
+		.oneOf("external").use("file-loader").loader("file-loader").options(fileLoaderOptions).end().end();
 }
 
 module.exports = handler;
