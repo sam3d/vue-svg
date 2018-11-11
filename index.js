@@ -1,9 +1,9 @@
 const _ = require("lodash");
 
 const defaults = {
-	inline: { svgo: false }, // Options for vue-svg-loader
-	sprite: { extract: false }, // Options for svg-sprite-loader
-	data: {}, // Options for url-loader
+	inline: { resourceQuery: /inline/, svgo: false }, // Options for vue-svg-loader
+	sprite: { resourceQuery: /sprite/, extract: false }, // Options for svg-sprite-loader
+	data: { resourceQuery: /data/ }, // Options for url-loader
 	external: {} // Options for file-loader
 };
 
@@ -32,10 +32,17 @@ function setup(config, options) {
 
 	rule.uses.clear(); // Clear out existing uses of the svg rule
 
+	const query = {}; // Keep track of the resource queries
+	for (option in options) {
+		if (!options[option].resourceQuery) continue; // Skip if no query
+		query[option] = options[option].resourceQuery; // Get the query
+		delete options[option].resourceQuery; // Delete the field (to prevent passing it as a loader option)
+	}
+
 	rule
-		.oneOf("inline").resourceQuery(/inline/).use("vue-svg-loader").loader("vue-svg-loader").options(options.inline).end().end()
-		.oneOf("sprite").resourceQuery(/sprite/).use("svg-sprite-loader").loader("svg-sprite-loader").options(options.sprite).end().end()
-		.oneOf("data").resourceQuery(/data/).use("url-loader").loader("url-loader").options(options.data).end().end()
+		.oneOf("inline").resourceQuery(query.inline).use("vue-svg-loader").loader("vue-svg-loader").options(options.inline).end().end()
+		.oneOf("sprite").resourceQuery(query.sprite).use("svg-sprite-loader").loader("svg-sprite-loader").options(options.sprite).end().end()
+		.oneOf("data").resourceQuery(query.data).use("url-loader").loader("url-loader").options(options.data).end().end()
 		.oneOf("external").use("file-loader").loader("file-loader").options(options.external).end().end();
 }
 

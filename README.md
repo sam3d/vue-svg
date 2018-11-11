@@ -125,6 +125,22 @@ module.exports = {
 
 You can provide as many options as you like, or nothing at all. You don't have to configure options, it will use some standard defaults.
 
+You can also customise the resource queries for each type that doesn't get passed as a loader options (other than `external`, which doesn't use a resourceQuery):
+
+```javascript
+// vue.config.js
+
+module.exports = {
+	pluginOptions: {
+		svg: {
+			// You can change this
+			inline: { resourceQuery: /inline/ }
+		}
+	}
+};
+
+```
+
 ### Standard defaults
 By default, `file-loader` will inherit the standard configuration from `vue-cli` so that behaves exactly the same.
 
