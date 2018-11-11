@@ -1,0 +1,29 @@
+{
+  "name": "vue-cli-plugin-svg",
+  "version": "0.0.1",
+  "description": "Super simple svg loading module for Vue.js",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sam3d/vue-svg.git"
+  },
+  "keywords": [
+    "vue",
+    "vue-cli",
+    "svg",
+    "inline",
+    "data",
+    "url"
+  ],
+  "author": "Sam Holmes",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sam3d/vue-svg/issues"
+  },
+  "homepage": "https://github.com/sam3d/vue-svg#readme",
+  "dependencies": {
+    "file-loader": "^2.0.0",
+    "url-loader": "^1.1.2",
+    "vue-svg-loader": "^0.11.0"
+  }
+}
