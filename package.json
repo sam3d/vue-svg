@@ -23,7 +23,11 @@
   "homepage": "https://github.com/sam3d/vue-svg#readme",
   "dependencies": {
     "file-loader": "^2.0.0",
+    "svg-sprite-loader": "^4.1.3",
     "url-loader": "^1.1.2",
     "vue-svg-loader": "^0.11.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.25.1"
   }
 }
