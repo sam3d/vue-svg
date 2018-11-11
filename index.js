@@ -19,6 +19,7 @@ function setup(config) {
 
 	rule
 		.oneOf("inline").resourceQuery(/inline/).use("vue-svg-loader").loader("vue-svg-loader").options({ svgo: false }).end().end()
+		.oneOf("sprite").resourceQuery(/sprite/).use("svg-sprite-loader").loader("svg-sprite-loader").end().end()
 		.oneOf("data").resourceQuery(/data/).use("url-loader").loader("url-loader").end().end()
 		.oneOf("external").use("file-loader").loader("file-loader").options(options).end().end();
 }
