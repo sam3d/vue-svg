@@ -10,6 +10,7 @@ _Super simple svg loading module for Vue.js_
 - `file.svg` - normal import using `file-loader`
 - `file.svg?data` - base64 data url import using `url-loader`
 - `file.svg?inline` - inline import using `vue-svg-loader`
+- `file.svg?sprite` - import using `svg-sprite-loader`
 
 ## Installation
 Using the new [Vue CLI 3](https://cli.vuejs.org/), it's as simple as navigating to your project and running:
@@ -83,6 +84,24 @@ export default {
 
 ```html
 <svg xmlns="http://www.w3.org/2000/svg"><path></path></svg>
+```
+
+### Sprite import
+
+```html
+<template>
+	<svg>
+		<use xlink:href="#vue-logo"></use>
+	</svg>
+</template>
+
+<script>
+import "@/assets/vue-logo.svg?sprite";
+</script>
+```
+
+```html
+<!-- Coming shortly -->
 ```
 
 ## Configuration
