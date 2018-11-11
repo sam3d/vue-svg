@@ -1,6 +1,8 @@
+const SpriteLoaderPlugin = require("svg-sprite-loader/plugin");
+
 const defaults = {
 	inline: { svgo: false }, // Options for vue-svg-loader
-	sprite: {}, // Options for svg-sprite-loader
+	sprite: { extract: true }, // Options for svg-sprite-loader
 	data: {}, // Options for url-loader
 	external: {} // Options for file-loader
 };
@@ -23,8 +25,16 @@ function handler(api, options) {
  */
 function setup(config, options) {
 	const rule = config.module.rule("svg"); // Find the svg rule
-	options.external = { ...rule.use("file-loader").get("options"), ...options.external }; // Make sure we save the file loader options
+
+	const fileLoaderOptions = rule.use("file-loader").get("options"); // Get the file loader options
+	options.external = { ...fileLoaderOptions, ...options.external }; // Make sure we save the file loader options
+	options.sprite = { spriteFilename: fileLoaderOptions.name, ...options.sprite }; // Use file loader options for sprite name
+
 	rule.uses.clear(); // Clear out existing uses of the svg rule
+
+	config
+		.plugin("sprite")
+		.use(SpriteLoaderPlugin);
 
 	rule
 		.oneOf("inline").resourceQuery(/inline/).use("vue-svg-loader").loader("vue-svg-loader").options(options.inline).end().end()
