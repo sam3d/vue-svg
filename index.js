@@ -1,3 +1,5 @@
+const _ = require("lodash");
+
 const defaults = {
 	inline: { svgo: false }, // Options for vue-svg-loader
 	sprite: { extract: false }, // Options for svg-sprite-loader
@@ -25,8 +27,8 @@ function setup(config, options) {
 	const rule = config.module.rule("svg"); // Find the svg rule
 
 	const fileLoaderOptions = rule.use("file-loader").get("options"); // Get the file loader options
-	options.external = { ...fileLoaderOptions, ...options.external }; // Make sure we save the file loader options
-	options.sprite = { spriteFilename: fileLoaderOptions.name, ...options.sprite }; // Use file loader options for sprite name
+	options.external = _.merge(fileLoaderOptions, options.external); // Make sure we save the file loader options
+	options.sprite = _.merge({ spriteFilename: fileLoaderOptions.name }, options.sprite); // Use file loader options for sprite name
 
 	rule.uses.clear(); // Clear out existing uses of the svg rule
 
@@ -39,8 +41,7 @@ function setup(config, options) {
 
 function parseOptions({ pluginOptions = {} }) {
 	let { svg } = pluginOptions; // Get the svg configuration
-
-	if (typeof svg === "object") svg = { ...defaults, ...svg }; // If exists, merge with defaults
+	if (typeof svg === "object") svg = _.merge(defaults, svg); // If exists, merge with defaults
 	else if (!svg) svg = defaults; // If no config set, use defaults
 	else throw new TypeError(`pluginOptions.svg is of type "${typeof svg}", which is not a valid configuration type`);
 
