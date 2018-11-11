@@ -1,6 +1,6 @@
 {
   "name": "vue-cli-plugin-svg",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Super simple svg loading module for Vue.js",
   "main": "index.js",
   "repository": {
