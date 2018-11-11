@@ -85,6 +85,32 @@ export default {
 <svg xmlns="http://www.w3.org/2000/svg"><path></path></svg>
 ```
 
+## Configuration
+You can provide options to all of the loaders used in using the `vue.config.js` `pluginOptions` field:
+
+```javascript
+// vue.config.js
+
+module.exports = {
+	pluginOptions: {
+		svg: {
+			inline: {}, // Pass options to vue-svg-loader
+			data: {}, // Pass options to url-loader
+			sprite: {}, // Pass options to svg-sprite-loader
+			external: {} // Pass options to file-loader
+		}
+	}
+};
+
+```
+
+You can provide as many options as you like, or nothing at all. You don't have to configure options, it will use some standard defaults.
+
+### Standard defaults
+By default, `file-loader` will inherit the standard configuration from `vue-cli` so that behaves exactly the same.
+
+`vue-svg-loader` by default will _not_ use `svgo`. This is because it can cause more problems than it solves generally, though this can be easily re-enabled. Check the [`vue-svg-loader` documentation](https://vue-svg-loader.js.org/) for more info.
+
 ## Contributing
 As this loader attempts to abstract webpack configuration from the process and make it easier to use multiple svg loaders, any contributions that add more svg loader methods to the configuration will be accepted wholeheartedly!
 
