@@ -51,6 +51,9 @@ function setup(config, options) {
   rule
     .oneOf("inline")
     .resourceQuery(query.inline)
+    .use('vue-loader')
+    .loader('vue-loader-v16')
+    .end()
     .use("vue-svg-loader")
     .loader("vue-svg-loader")
     .options(options.inline);
