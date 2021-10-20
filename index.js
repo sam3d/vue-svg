@@ -1,4 +1,4 @@
-const _ = require("lodash");
+import merge from "lodash/merge";
 
 /**
  * The default options for the package. These are defined and configured properly
@@ -37,10 +37,10 @@ function setup(config, options) {
    * vue-cli.
    */
   const fileLoaderOptions = rule.use("file-loader").get("options"); // Get the file loader options
-  options.external = _.merge(fileLoaderOptions, options.external); // Make sure we save the file loader options
+  options.external = merge(fileLoaderOptions, options.external); // Make sure we save the file loader options
 
   // Use file loader options for sprite name
-  options.sprite = _.merge(
+  options.sprite = merge(
     { spriteFilename: fileLoaderOptions.name },
     options.sprite
   );
@@ -83,7 +83,7 @@ function parseOptions({ pluginOptions = {} }) {
   let { svg } = pluginOptions; // Get the svg configuration
 
   // Merge svg options if object, otherwise just use defaults
-  if (typeof svg === "object") svg = _.merge(defaults, svg);
+  if (typeof svg === "object") svg = merge(defaults, svg);
   else if (!svg) svg = defaults;
   else {
     throw new TypeError(
